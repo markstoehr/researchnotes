@@ -1,0 +1,14 @@
+\chapter{Speech Recognition Features}
+
+\section{Mel Spectral Features}
+\label{sec:mel-spectral-features}
+
+Mel spectral features are generally formed using a filterbank
+whose center frequencies increase exponential and whose 
+bandwidths are increasing along the frequency axis.  They are
+centered such that they are linear with the mel scale given
+by the equation
+\begin{equation}
+mel(f) = 2595 \log_{10}\left(1 + \frac{f}{700}\right)
+\end{equation}
+which is given in \cite{wiki:mel_scale}.
