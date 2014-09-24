@@ -1,0 +1,37 @@
+\chapter{Generative Convolutional Neural Networks}
+
+In this chapter we develop the idea of a generative convolutional neural
+network.  Doing so will allow us to use a natural generative pre-training
+algorithm so that we do not need the same quantity of labeled data
+that deep neural networks normally require.
+
+\section{Fixed-length speech samples}
+
+We begin our discussion with fixed-length vectors of speech signals
+$\mathbf{X}\in\mathbb{R}^{N\times D}$ which denotes $N$ vectors
+of dimension $D$.  We use Numpy-style slicing syntax so that
+$\mathbf{X}(n_1:n_2,d_1:d_2)\in \mathbb{R}^{(n_2-n_1)\times(d_2-d_1)}$
+refers to the matrix
+\begin{equation}
+\begin{bmatrix}
+  \mathbf{X}(n_1,d_1) & \mathbf{X}(n_1,d_1+1) & \cdots & \mathbf{X}(n_1,d_2-1)\\
+  \mathbf{X}(n_1+1,d_1) & \mathbf{X}(n_1+1,d_1+1) & \cdots & \mathbf{X}(n_1+1,d_2-1)\\
+  \vdots & \vdots & \ddots & \vdots \\
+  \mathbf{X}(n_2-1,d_1) & \mathbf{X}(n_2-1,d_1+1) & \cdots & \mathbf{X}(n_2-1,d_2-1)
+\end{bmatrix}
+\end{equation}
+and we denote the index set for a vector of length $D$ as $[D]=\{0,1,\ldots,D-1\}$. We will consider a sequence of models for these data.  Initially we will begin with 
+a mixture model and progressively we will develop towards the convolutional neural network model.
+
+\subsection{Circulant Gaussian Models}
+
+We may model these vectors using circulant Gaussians $\mathcal{N}_D(\mathbf{0},\mathbf{\Sigma})$ where
+$\tilde{\boldsymbol{\Sigma}}\in\Circ_D$ where $\Circ_D$ is the set of circulant matrices over $\mathbb{R}^{D\times D}$.
+Since $\boldsymbol{\Sigma}$ is circulant we may write it as $F_D^*\diag(\tilde{\boldsymbol{\sigma}})F_D$ for some 
+real vector $\tilde{\boldsymbol{\sigma}}\in\mathbb{R}^D$. Since $\boldsymbol{\Sigma}$ is a real symmetric
+ positive definite circulant matrix we may write it as $\boldsymbol{\Sigma}=\Circ(\boldsymbol{\sigma})$
+where $\boldsymbol{\sigma}$ is the first column of $\boldsymbol{\Sigma}$.  Due to the symmetry and circularity of
+$\boldsymbol{\Sigma}$ this means that $\boldsymbol{\sigma}$ is symmetric so that for $1 < d < D$ we have
+$\boldsymbol{\sigma}(d)=\boldsymbol{\sigma}(D-d)$ and the same holds for $\tilde{\boldsymbol{\sigma}}=\mathbf{F}\boldsymbol{\sigma}$.
+
+The circulant model is given by a single vector specifying the spectral distribution
