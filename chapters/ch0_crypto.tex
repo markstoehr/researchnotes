@@ -13,6 +13,48 @@ so that way you can have features like reversable transactions built on
 top of bitcoins.  The secure hardware aspect would allow independent and 
 trustless verification.
 
+\section{Papers}
+
 \section{Decentralized Authentication}
 
-\section{Encrypted HMMs}
+\section{Secure, Privacy-Preserving Speech Technologies}
+
+
+\subsection{Privacy-preserving speaker verification and identification using Gaussian mixture models}
+In \cite{pathak2013privacy} the author addresses the question of whether we can do speaker verficiation
+(authentication) and identification in a privacy-preserving and secure manner such that the 
+verifier/identifier does not have access to the actual recording of speech but can still successfully
+run the programs.  Speaker identification involves finding individuals through audio surveillance
+and such technologies have the application that one can find somebody among a crowd of individuals
+without violating the voice privacy of anybody else.  Speaker verification is about letting users
+authenticate themselves.  The privacy and security attacks in speaker verification are particularly
+dangerous because it could allow an adversary to imitate the speaker and break into other systems.
+
+The solution proposed is based on secure multiparty computation protocols that allows the system
+to operate only encrypted speech data without observing the plaintext.  There is a client-server
+model where the user executes a client program on a network coupled with a public key cryptosystem.
+The user retains the private key and shares the public key with the system.
+
+
+Speaker identification works by estimating a universal background model over all speakers which is then adapted to an individuals voice when they enroll in the system using MAP adaptation.  Verification
+is performed by testing a query speaker with a log-likelihood
+ratio test of the MAP adapted hypothesized speaker model
+against the background model.  Open set speaker identification
+is performed by simply finding which of the speaker models
+is accepted or whether the background model fits the input
+speech best.
+
+Partially homomorphic encryption schemes are used: in particular
+Paillier and Boneh-Goh-Nissim (BGN) so that we can compute inner
+products.  Paillier can compute an encrypted inner product where
+one of the vectors is plaintext and the other is encrypted
+but it can't compute inner products between two encrypted vectors.
+BGN can compute encrypted inner products, however.  Due to these
+limitations Paillier is better served for interactive protocols
+with Alice and Bob both doing computations on their respective
+machines, whereas BGN can be used for non-interactive protocols.
+
+\subsubsection{Adversarial Model}
+
+
+
