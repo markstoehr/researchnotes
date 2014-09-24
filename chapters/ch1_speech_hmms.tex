@@ -4,3 +4,17 @@
 We review the article in \cite{young1994state}
 
 
+\section{HTK}
+
+\subsection{HVite for Forced Alignment}
+
+In order to bootstrap we need to have state labels to classify the deep
+neural network into the state labels we need a viterbi forced alignment
+to get the state labels.  These are obtained in the HTK tools using
+\texttt{HVite}.  The command we use is
+\begin{verbatim}
+$HTKTools/HLEd -n trainTriphones -l '*' -i trainTri.mlf mktri.led trainMono.mlf
+
+HVite -a -b h# -f -i forced_dev.mlf -H -I
+HVite  -T 1 -C work/hvite.config -H work/tri-nmix48-npass4/MMF -S work/dev.scp -I work/trainTri.mlf -i faout.mlf dict tiedlist 
+\end{verbatim}
