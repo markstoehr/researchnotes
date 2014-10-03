@@ -15,6 +15,9 @@ $(FILE).pdf: $(FILE).tex chapters.tex
 	bibtex $(FILE)
 	pdflatex $(FILE)
 	pdflatex $(FILE)
+	bibtex $(FILE)
+	pdflatex $(FILE)
+	pdflatex $(FILE)
 
 chapters.tex: $(wildcard dir/*.tex)
 	ls chapters/*.tex | awk '{printf "\\input{%s}\n", $$1}' > chapters.tex
