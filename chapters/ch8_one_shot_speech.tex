@@ -1,0 +1,33 @@
+\chapter{One-shot learning in speech recognition}
+
+The general problem here is to search a large database of audio using only an audio query.
+
+\section{Background}
+
+Here we consider some papers that are related to the one-shot learning approach and that
+provide benchmarks for the non-one-shot learning approach.  Of particular interest
+are spoken query systems that make use of labeled data.  The zero-resource systems
+are always going to perform worse than these, but it is interesting to think about them from a comparison
+point of view.
+
+\subsection{Lattice-Based Search For Spoken Utterance Retrieval}
+
+In \cite{saraclar2004lattice} the problem considered is locating occurrences of
+a query in spoken communication for the purposes of browsing and indexing.
+Phonetic search is good for handling out of vocabulary words.  The best ASR hypothesis
+works for tasks with an $\sim20\%$ error rate or so but as error increases
+the best ASR hypothesis is no longer effective.  An ASR system is first run over
+all of the data and each utterance is represented by the best hypothesis string
+or a lattice of possible hypotheses.
+
+In the case of lattices a set of indices is stored, one for each arc label (word or phone) l that records
+the lattice number $L[a]$, input state $k[a]$ of each arc $a$
+labeled with $l$ in each lattice, along with the probability mass $f(k[a])$
+leading to that state, the probability of the arc itself $p(a\mid k[a])$ and an index for the next state.
+
+Retrieval with a single label 
+
+\section{Indexing Raw Acoustic Features for Scalable Zero Resource Search}
+
+The paper \cite{jansen2012indexing} begins by the observation that supervised spoken term detection is much more efficient
+than unsupervised query by example spoken term detection.  The supervised algorithms
