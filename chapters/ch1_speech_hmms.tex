@@ -3,6 +3,39 @@
 \section{Phonetic Decision Trees for Context Dependent Models}
 We review the article in \cite{young1994state}
 
+\section{Statistical Methods For Speech Recognition}
+
+A useful resource for understanding the statistical aspects of speech recognition is 
+the book \cite{frederick1997statistical} which reviews a large body of work
+on building hidden Markov model speech systems.  I will review the various
+chapters contained in the book.
+
+\subsection{Triphones and Allophones}
+
+Allophones such as the /t/ in ``top'' which is aspirated and the t in ``pot'' which is
+not  show considerable variation depending on context.  Triphones are a method for dealing
+with such context effects.  What do they buy you:
+\begin{enumerate}
+\item  Generate pronunciations of unseen words (potentially with novel spellings)
+\item  Can handle coarticulation
+\end{enumerate}
+
+
+The general problem 60 phones translates to 216,000 triphones and there would not be
+enough data to estimate all of these. The main approach to handling this problem
+is to put triphones into equivalence classes.  The correct architecture for this is difficult
+to work out.  Although we can normally think of the problem as using a free semi-group
+examples such as ``Press show'' indicate there are occasions where a sound gets dropped
+which indicates that this is in fact a semi-group with non-trivial relations.
+
+Working out the equivalence classes is tricky the main way is to create a class for each phone
+and put the phone in each context in that class. For triphones we may write each triphone
+using symbols as $\psi_1 \alpha \psi_2$ where $\alpha$ is the phone, $\psi_1$ is the left context,
+and $\psi_2$ is the right context.  A given equivalence class is assumed to follow a Gaussian
+distribution and the distribution is split based on questions of the context, i.e., does $\psi_1$
+belong to the set of Stops? or Consonants? You pick the best split for the currently observed triphones
+and then this creates a decision tree that can then be used to generalize to unseen triphones.
+
 
 \section{HTK}
 
@@ -13,8 +46,15 @@ neural network into the state labels we need a viterbi forced alignment
 to get the state labels.  These are obtained in the HTK tools using
 \texttt{HVite}.  The command we use is
 \begin{verbatim}
+HTK=/home/mark/Software/htk
+HTKTools=$HTK/HTKTools
+
 $HTKTools/HLEd -n trainTriphones -l '*' -i trainTri.mlf mktri.led trainMono.mlf
 
 HVite -a -b h# -f -i forced_dev.mlf -H -I
-HVite  -T 1 -C work/hvite.config -H work/tri-nmix48-npass4/MMF -S work/dev.scp -I work/trainTri.mlf -i faout.mlf dict tiedlist 
+
+$HTKTools/HLEd -i devTri.mlf mktri.led devMono.mlf
+$HTKTools/HVite -b h# -f -a -T 1 -C hvite.config -H tri-nmix48-npass4/MMF -S dev.scp -I devTri.mlf -i fadevout.mlf dict tiedlist 
+
+$HTKTools/HVite -b h# -f -a -T 1 -C hvite.config -H tri-nmix48-npass4/MMF -S dev.scp -I devMono.mlf -i fadevout.mlf dict tiedlist 
 \end{verbatim}
