@@ -1,7 +1,24 @@
 \chapter{Speech Recognition with Deep Neural Networks}
 
+\section{Combining time-and frequency-domain convolution in convolutional neural network-based phone recognition}
+
+A paper by L{\'a}szl{\'o} T{\'o}th that develops a convolutional network for phone recognition
+on the TIMIT database.
+
+
 \section{Convolutional Deep Maxout Networks for Phone Recognition}
 In this section we are writing up an explanation of 
 \cite{toth2014convolutional}.  The paper use mel features
 (as described in Chapter~\ref{sec:mel-spectral-features})
 as the basis for the system.
+
+
+\subsection{Convolutional Neural Networks}
+
+The convolutional network uses as its base input a 17-frame by
+7 mel-channel time-mel block: i.e. 7 rows by 17 columns in the
+time frequency representation.  Pooling and convolution are central
+to convolutional neural networks and they are usually performed
+along the frequency axis.  An $r$-pooling network will move the $7\times 17$
+along filter along $7$ adjacent mel feature blocks and takes the maximum over
+them.
