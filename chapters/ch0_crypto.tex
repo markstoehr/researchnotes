@@ -20,6 +20,15 @@ trustless verification.
 \section{Secure, Privacy-Preserving Speech Technologies}
 
 
+\subsection{A framework for secure speech recognition}
+
+In \cite{smaragdis2007framework} the authors make use of several
+partially homomorphic protocols for doing several speech tasks:
+\begin{enumerate}
+\item secure inner products: they use \cite{verykios2004state}
+\item secure maximum index:`
+\end{enumerae}
+
 \subsection{Privacy-preserving speaker verification and identification using Gaussian mixture models}
 In \cite{pathak2013privacy} the author addresses the question of whether we can do speaker verficiation
 (authentication) and identification in a privacy-preserving and secure manner such that the 
@@ -56,5 +65,43 @@ machines, whereas BGN can be used for non-interactive protocols.
 
 \subsubsection{Adversarial Model}
 
+The parties are assumed to be interactin in a client-server
+framework where they are separate.
 
+The threat models used are semi-honest and malicious behavior.
+In semi-honest behavior the protocol is followed but all
+intermediate results are kept so that one party can
+attempt to learn as much as possible about the other party.
 
+The system is not supposed to ever have access to the user's
+speech so the user submits an encrypted adapted speaker model
+during the enrollment phase and encrypted speech during the 
+verification phase.  The assumption is that the system
+provides the algorithm honestly since incorrect output
+would be a potential system security breach 
+(or a user frustration) but not necessarily
+reveal any private information. Thus, the system is assumed
+to be semi-honest.
+
+In the private enrollment protocol the user has samples
+$x_1,\ldots, x_n$, encryption key $E[\cdot]$, and decryption key $E^{-1}[\cdot]$.
+The system has a universal background model $\lambda_U=W_i^U$
+for $i=1,\ldots,N$ where taking a special inner product with
+each of the $W_i^U$ and using the mixing weights using the protocol
+for secure inner products from \cite{pathak2011privacy}
+we can compute the likelihood of the data under the UBM.  The system
+also has access to the encryption key $E[\cdot]$.
+
+The output is that the system ends up with an encrypted user
+model $E[\lambda_s]=E[\hat{W}^s_i]$ for $i=1,\ldots,N$.  The steps
+are
+\begin{enumerate}
+\item User performs the model adaptation of $\lambda_U$
+with $x_1,\ldots,x_n$ to obtain $\lambda_s$
+\item User encodes $\lambda_s$ into the matrix representation
+\item User encrypts $\hat{W}_i$ and sends to the system
+\end{enumerate}
+
+The authors then present two potential implementations of the
+verification protocol: a non-interactive version and an interactive
+version.
